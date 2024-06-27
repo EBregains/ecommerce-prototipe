@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/utils/utils"
 import { HTMLAttributes } from "react"
 
 interface Model3DProps extends HTMLAttributes<HTMLDivElement> {
