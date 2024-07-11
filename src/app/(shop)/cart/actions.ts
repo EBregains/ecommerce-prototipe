@@ -1,4 +1,8 @@
+'use server'
+
+import { createClient } from "@/utils/supabase/server";
 import MercadoPagoConfig, { Preference } from "mercadopago";
+import { revalidatePath } from "next/cache";
 
 const ACCESS_TOKEN = process.env.MP_ACCES_TOKEN ?? ""
 
@@ -14,4 +18,45 @@ export async function OnSubmit(formData: FormData) {
   // preference.create({
   //   // body: { }
   // }).then(console.log).catch(console.log);
+}
+
+export async function deleteCartItem(formData: FormData) {
+
+  const item_id = formData.get('order_id')
+  const supabase = createClient();
+
+  const response = await supabase.from('cart').delete().eq('id', item_id)
+
+  console.log(response);
+
+  revalidatePath('/cart')
+}
+
+export async function RemoveOne(formData: FormData) {
+
+  const item_id = formData.get('order_id')
+  const quantity = Number(formData.get('quantity'))
+  const supabase = createClient();
+
+  const { error } = await supabase
+    .from('cart')
+    .update({ quantity: (quantity - 1) })
+    .eq('id', item_id)
+
+  revalidatePath('/cart')
+}
+
+export async function AddOne(formData: FormData) {
+
+  const item_id = formData.get('order_id')
+  const quantity = Number(formData.get('quantity'))
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('cart')
+    .update({ quantity: (quantity + 1) })
+    .eq('id', item_id)
+    .select()
+
+  revalidatePath('/cart')
 }

@@ -17,3 +17,18 @@ export type Product = {
   thumbnail?: string,
   images: Array<string>,
 }
+
+export type productInCart = {
+  id: any,
+  products: {
+    title: any,
+    slug: any,
+    images: any,
+    base_price: any,
+  },
+  color: any,
+  plastic: any,
+  size: any,
+  definition: any,
+  quantity: any,
+}

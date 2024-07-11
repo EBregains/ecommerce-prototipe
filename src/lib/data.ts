@@ -49,3 +49,15 @@ export async function getBestSellers() {
   if (data)
     return data
 }
+
+export async function getPayments() {
+  const supabase = createClient()
+  const { data, error } = await supabase.from('payments').select()
+
+  if (data)
+    return data
+}
+
+export async function addProductToCart(product: unknown) {
+
+}

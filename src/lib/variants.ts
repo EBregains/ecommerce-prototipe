@@ -48,6 +48,8 @@ export const matchColors = (colors: Array<string>) => {
   return COLORS.filter((element) => (colors.includes(element.id) ?? element))
 }
 
+export const matchColor = (color_id: string) => { return COLORS.find((element) => element.id == color_id) }
+
 export const MATERIALS = [
   {
     id: '1',
@@ -69,3 +71,29 @@ export const MATERIALS = [
 export const matchMaterials = (materials: Array<string>) => {
   return MATERIALS.filter((element) => (materials.includes(element.id) ?? element))
 }
+
+export const matchMaterial = (material_id: string) => { return MATERIALS.find((element) => element.id == material_id) }
+
+export const DEFINITIONS = [
+  {
+    id: '1',
+    name: "Normal",
+    cost: 0.9,
+  },
+  {
+    id: '2',
+    name: "Alta",
+    cost: 1,
+  },
+  {
+    id: '3',
+    name: "Extrema",
+    cost: 1.2,
+  },
+]
+
+export const matchDefinitions = (definitions: Array<string>) => {
+  return DEFINITIONS.filter((element) => (definitions.includes(element.id) ?? element))
+}
+
+export const matchDefinition = (definition_id: string) => { return DEFINITIONS.find((element) => (element.id == definition_id) ?? undefined) }

@@ -1,6 +1,7 @@
 'use server'
 
 import { createClient } from "@/utils/supabase/server"
+import { revalidatePath } from "next/cache"
 
 const supabase = createClient()
 
@@ -21,7 +22,7 @@ export async function addToCart(formData: FormData) {
     .insert(productDetails)
 
   console.log(data, error);
-
+  revalidatePath('/', 'layout')
 }
 
 export async function directCheckout(formData: FormData) {

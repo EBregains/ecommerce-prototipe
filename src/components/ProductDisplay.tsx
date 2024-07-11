@@ -7,7 +7,6 @@ import { buttonVariants } from "./ui/button"
 import { matchColors, matchMaterials } from '@/lib/variants'
 import { addToCart, directCheckout } from "@/app/(shop)/tienda/p/[slug]/actions"
 import { routes } from "@/lib/routes"
-import Link from "next/link"
 
 export const ProductDisplay = ({ product, user_id }: { product: any, user_id: string | undefined }) => {
 
@@ -26,8 +25,8 @@ export const ProductDisplay = ({ product, user_id }: { product: any, user_id: st
           {product.title}
         </h1>
         <p className="font-light text-3xl">{ARS.format(product.base_price)}</p>
-        <input className="sr-only hidden" name="product_id" value={product.id} />
-        <input className="sr-only hidden" name="user_id" value={user_id} />
+        <input className="sr-only hidden" readOnly name="product_id" value={product.id} />
+        <input className="sr-only hidden" readOnly name="user_id" value={user_id} />
         {
           availableColors &&
           <div className="flex flex-col my-8 w-full">
