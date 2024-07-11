@@ -8,9 +8,10 @@ import PurchaseResumee from "@/components/cart/PurchaseResumee";
 import { routes } from "@/lib/routes";
 import { buttonVariants } from "@/components/ui/button";
 
-const supabase = createClient()
 
 export default async function CartPage() {
+
+  const supabase = createClient()
 
   //@ts-ignore
   const { data: productsInCart, error } = await supabase.from("cart").select('id, products ( title, slug, images, base_price ), color, plastic, size, definition, quantity').order('added_at', { ascending: true }) as { data: productInCart[], error: any }

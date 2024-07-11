@@ -12,7 +12,7 @@ import { Icons } from "@/lib/Icons";
 import { routes } from "@/lib/routes";
 
 const inter = Inter({ subsets: ["latin"] });
-const supabase = createClient();
+
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +27,8 @@ export default async function AdminLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+  const supabase = createClient();
 
   const {
     data: { user },

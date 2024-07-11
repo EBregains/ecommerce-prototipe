@@ -1,3 +1,4 @@
+'use server'
 import {
   Table,
   TableBody,
@@ -14,6 +15,7 @@ import { ARS } from "@/utils/utils"
 export default async function PrivatePage() {
 
   const payments = await getPayments() || []
+
   return (
     <section>
       <Table>
