@@ -71,12 +71,12 @@ export default function Home() {
           <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-16 gap-y-16 px-4 lg:mx-0 lg:max-w-none lg:grid-cols-2  ">
             <CustomerReview customerName="Alejandro Martínez" imgsrc="/users/user-1.png">
               <p>
-                "La experiencia de compra fue fantástica. La interfaz de la tienda es fácil de navegar y el proceso de personalización de mis piezas fue muy intuitivo. Recibí mis productos antes de lo esperado y la calidad superó mis expectativas. <span className="p-0.5 bg-slate-600 text-white">Los colores son vibrantes y las formas perfectamente acabadas.</span> ¡Un servicio de primera clase que vale cada centavo!"
+                &quot;La experiencia de compra fue fantástica. La interfaz de la tienda es fácil de navegar y el proceso de personalización de mis piezas fue muy intuitivo. Recibí mis productos antes de lo esperado y la calidad superó mis expectativas. <span className="p-0.5 bg-slate-600 text-white">Los colores son vibrantes y las formas perfectamente acabadas.</span> ¡Un servicio de primera clase que vale cada centavo!&quot;
               </p>
             </CustomerReview>
             <CustomerReview customerName="Laura Gómez" imgsrc="/users/user-3.png">
               <p>
-                "Estoy realmente impresionada con la calidad de las impresiones 3D que recibí. Los detalles son impecables y el material utilizado es de alta durabilidad. El servicio al cliente fue excepcional, siempre atentos y dispuestos a resolver mis dudas. Definitivamente <span className="p-0.5 bg-slate-600 text-white">volveré a comprar aquí</span> para mis próximos proyectos. ¡Muy recomendado!"
+                &quot;Estoy realmente impresionada con la calidad de las impresiones 3D que recibí. Los detalles son impecables y el material utilizado es de alta durabilidad. El servicio al cliente fue excepcional, siempre atentos y dispuestos a resolver mis dudas. Definitivamente <span className="p-0.5 bg-slate-600 text-white">volveré a comprar aquí</span> para mis próximos proyectos. ¡Muy recomendado!&quot;
               </p>
             </CustomerReview>
           </div>
