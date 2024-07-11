@@ -37,7 +37,9 @@ export default async function ProductPage({ params }: { params: { slug: string }
             <div className="mb-8 mt-8 lg:mt-0">
               <Breadcrumbs breadcrumbs={breadcrumbs} />
             </div>
-            <ProductDisplay product={producto} user_id={user?.id} />
+            <form>
+              <ProductDisplay product={producto} user_id={user?.id} />
+            </form>
           </div>
         </div>
         {/* <div>

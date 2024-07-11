@@ -24,12 +24,14 @@ export async function deleteCartItem(formData: FormData) {
 
   const item_id = formData.get('order_id')
   const supabase = createClient();
+  console.log(item_id);
+
 
   const response = await supabase.from('cart').delete().eq('id', item_id)
 
   console.log(response);
 
-  revalidatePath('/cart')
+  revalidatePath('/cart', 'page')
 }
 
 export async function RemoveOne(formData: FormData) {

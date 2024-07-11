@@ -7,6 +7,8 @@ import { productInCart } from "@/lib/types";
 import PurchaseResumee from "@/components/cart/PurchaseResumee";
 import { routes } from "@/lib/routes";
 import { buttonVariants } from "@/components/ui/button";
+import { useId } from "react";
+import { matchColor, matchDefinition, matchMaterial } from "@/lib/variants";
 
 
 export default async function CartPage() {
@@ -17,8 +19,19 @@ export default async function CartPage() {
   const { data: productsInCart, error } = await supabase.from("cart").select('id, products ( title, slug, images, base_price ), color, plastic, size, definition, quantity').order('added_at', { ascending: true }) as { data: productInCart[], error: any }
 
   let items_quantity: number = 0;
+  let total_price: number = 0
   for (let index = 0; index < productsInCart.length; index++) {
     items_quantity += productsInCart[index].quantity;
+
+    let unity_price = productsInCart[index].products.base_price
+    const color = matchColor(productsInCart[index].color);
+    if (color) unity_price *= color.price
+    const material = matchMaterial(productsInCart[index].plastic);
+    if (material) unity_price *= material.cost
+    const definition = matchDefinition(productsInCart[index].definition);
+    if (definition) unity_price *= definition.cost
+
+    total_price += unity_price * productsInCart[index].quantity
   }
 
   return (
@@ -38,8 +51,10 @@ export default async function CartPage() {
               <ul className="w-full sm:px-4">
                 {productsInCart.length > 0 ?
                   productsInCart?.map((producto, index) => (
-                    <li key={index} className="w-full flex py-4">
-                      <CartItem product={productsInCart[index]} />
+                    <li key={producto.id} className="w-full flex py-4">
+                      <form className="flex w-full">
+                        <CartItem product={productsInCart[index]} />
+                      </form>
                     </li>
                   )) :
                   <div className="w-full text-center sm:py-8 text-gray-500 flex items-center flex-col">
@@ -56,13 +71,14 @@ export default async function CartPage() {
                   <Truck className="inline-block size-6 mr-2" />
                   Envio
                 </h2>
+
               </section>
             }
           </div>
 
           {/* Section to calculate total */}
           <PurchaseResumee
-            products_total={1000}
+            products_total={total_price}
             items_quantity={items_quantity}
             shipment_cost={6000}
           />

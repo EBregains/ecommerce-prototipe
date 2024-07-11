@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../globals.css";
-import NavBar from "@/components/NavBar";
-import Footer from "@/components/Footer";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import AdminNav from "@/components/admin/AdminNav";
@@ -10,6 +8,7 @@ import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import Link from "next/link";
 import { Icons } from "@/lib/Icons";
 import { routes } from "@/lib/routes";
+import { Toaster } from "sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -51,6 +50,7 @@ export default async function AdminLayout({
         <main className="flex flex-1 bg-sky-50">
           <AdminNav />
           {children}
+          <Toaster />
         </main>
       </body>
     </html>

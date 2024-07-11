@@ -31,4 +31,5 @@ export type productInCart = {
   size: any,
   definition: any,
   quantity: any,
+  price?: any,
 }

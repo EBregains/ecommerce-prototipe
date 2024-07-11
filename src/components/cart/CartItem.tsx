@@ -2,18 +2,18 @@
 
 import { productInCart } from "@/lib/types";
 import { buttonVariants } from "../ui/button";
-import { ARS } from "@/utils/utils";
-import { Minus, Plus, Trash2 } from "lucide-react";
+import { ARS, cn } from "@/utils/utils";
+import { LoaderCircle, Minus, Plus, Trash2 } from "lucide-react";
 import { matchColor, matchDefinition, matchMaterial } from "@/lib/variants";
 import { AddOne, RemoveOne, deleteCartItem } from "@/app/(shop)/cart/actions";
 import { routes } from "@/lib/routes";
 import Link from "next/link";
+import { useFormStatus } from "react-dom";
 
 export default function CartItem({ product }: { product: productInCart }) {
 
   let unity_price = product?.products.base_price
   const color = matchColor(product?.color);
-  console.log(color);
 
   if (color) unity_price *= color.price
   const material = matchMaterial(product?.plastic);
@@ -21,8 +21,15 @@ export default function CartItem({ product }: { product: productInCart }) {
   const definition = matchDefinition(product?.definition);
   if (definition) unity_price *= definition.cost
 
+  const { pending } = useFormStatus();
+
   return (
-    <form className="flex w-full">
+    <div className={cn(pending ? "opacity-60 text-muted" : "", "relative flex w-full")}>
+      {pending &&
+        <div className="absolute w-full flex  items-center justify-center top-0 h-full z-20">
+          <LoaderCircle className="size-12 text-gray-400 animate-spin"></LoaderCircle>
+        </div>
+      }
       <input type="text" className="sr-only hidden" name="order_id" defaultValue={product?.id} />
       <div>
         <img src={product?.products.images[0]} alt="" className="size-36" />
@@ -40,7 +47,7 @@ export default function CartItem({ product }: { product: productInCart }) {
           {definition && <p className="inline-block w- md:w-fit">Definicion: <span className="font-medium block lg:inline-block text-black">{product?.definition}</span></p>}
         </div>
         <div className="flex flex-1 justify-between items-end mt-2 w-full">
-          <button formAction={deleteCartItem} className={buttonVariants({
+          <button disabled={pending} aria-disabled={pending} formAction={deleteCartItem} className={buttonVariants({
             size: 'sm',
             variant: 'outline',
             className: 'hover:bg-red-500 hover:stroke-white hover:text-white mr-4'
@@ -50,12 +57,12 @@ export default function CartItem({ product }: { product: productInCart }) {
           </button>
           <div className="flex items-center">
             <div className="flex gap-1">
-              <button formAction={RemoveOne} className="size-7 md:size-8 rounded-sm flex items-center justify-center bg-gray-200 disabled:opacity-20"
-                disabled={product?.quantity <= 1}>
+              <button aria-disabled={pending} formAction={RemoveOne} className="size-7 md:size-8 rounded-sm flex items-center justify-center bg-gray-200 disabled:opacity-20"
+                disabled={product?.quantity <= 1 || pending}>
                 <Minus className="size-2 md:size-4" />
               </button>
               <input name="quantity" type="number" className="rounded-sm appearance-none size-7 md:size-8 text-center text-xs md:text-sm border" value={product?.quantity} min={1} max={20} required readOnly />
-              <button formAction={AddOne} className="size-7 md:size-8 rounded-sm flex items-center justify-center bg-gray-200">
+              <button aria-disabled={pending} formAction={AddOne} className="size-7 md:size-8 rounded-sm flex items-center justify-center bg-gray-200">
                 <Plus className="size-2 md:size-4" />
               </button>
             </div>
@@ -63,5 +70,5 @@ export default function CartItem({ product }: { product: productInCart }) {
           </div>
         </div>
       </div>
-    </form>)
+    </div>)
 }
