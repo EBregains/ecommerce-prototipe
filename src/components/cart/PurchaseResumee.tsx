@@ -1,18 +1,22 @@
 import { ARS } from "@/utils/utils";
-import { Button, buttonVariants } from "../ui/button";
+import { buttonVariants } from "../ui/button";
 import MercadoPagoConfig, { Preference } from "mercadopago";
 import { redirect } from "next/navigation";
 
-const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCES_TOKEN! })
+const client = new MercadoPagoConfig({ accessToken: process.env.MP_ACCES_TOKEN!, })
 
 export default function PurchaseResumee({
   products_total,
   items_quantity,
-  shipment_cost
+  shipment_cost,
+  user_email,
+  disabled
 }: {
   products_total: number,
   items_quantity: number,
   shipment_cost?: number,
+  user_email?: string,
+  disabled?: boolean,
 }) {
 
   async function checkout(formData: FormData) {
@@ -20,15 +24,25 @@ export default function PurchaseResumee({
 
     const preference = await new Preference(client).create({
       body: {
+        payer: {
+          email: user_email
+        },
         items: [
           {
-            id: 'compra',
-            title: `compra de ${formData.get('items-quantity')} productos`,
+            id: 'productos',
+            title: `Compra de ${formData.get('items-quantity')} productos`,
             quantity: 1,
             unit_price: Number(formData.get('products-total')),
+          },
+          {
+            id: 'shipment',
+            title: 'Envio a ${Cierto Lugar}',
+            quantity: 1,
+            unit_price: Number(formData.get('shipment-cost'))
           }
         ]
-      }
+      },
+      requestOptions: {}
     })
 
     redirect(preference.sandbox_init_point!)
@@ -56,7 +70,8 @@ export default function PurchaseResumee({
       <button className={buttonVariants({
         size: 'lg',
         className: 'w-full mt-4 bg-sky-600'
-      })}>Continuar compra</button>
+      })}
+        disabled={disabled}>Continuar compra</button>
     </div>
   </form>)
 }

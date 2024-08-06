@@ -3,6 +3,7 @@ import { signup } from '@/app/(shop)/auth/actions'
 import { routes } from '@/lib/routes'
 import { buttonVariants } from '@/components/ui/button'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
+import { SubmitButton } from '@/components/auth/submit-button'
 
 export default function SignUpPage() {
   return (
@@ -57,10 +58,7 @@ export default function SignUpPage() {
             </div>
           </div>
           <div className='flex flex-col gap-4 mt-4'>
-            <button type='submit' className={buttonVariants({
-              size: "lg",
-              className: 'mt-2 bg-sky-600'
-            })}>Registrarse</button>
+            <SubmitButton text="Registrarse" className='mt-2 bg-sky-600' />
             <div className='flex flex-1 flex-col items-center'>
               <p className='text-xs opacity-80'>Ya tienes una cuenta?</p>
               <Link href={routes.auth.login} className={buttonVariants({

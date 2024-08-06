@@ -1,5 +1,4 @@
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
-import { Icons } from "@/lib/Icons";
 import { createClient } from "@/utils/supabase/server";
 import { ShoppingBasket, ShoppingCart, Truck } from "lucide-react";
 import CartItem from "@/components/cart/CartItem";
@@ -7,8 +6,10 @@ import { productInCart } from "@/lib/types";
 import PurchaseResumee from "@/components/cart/PurchaseResumee";
 import { routes } from "@/lib/routes";
 import { buttonVariants } from "@/components/ui/button";
-import { useId } from "react";
 import { matchColor, matchDefinition, matchMaterial } from "@/lib/variants";
+import { matchShipments, shipments } from "@/lib/shipments";
+import { selectShipment } from "./actions";
+import ShipmentItem from "@/components/cart/ShipmentItem";
 
 
 export default async function CartPage() {
@@ -17,6 +18,10 @@ export default async function CartPage() {
 
   //@ts-ignore
   const { data: productsInCart, error } = await supabase.from("cart").select('id, products ( title, slug, images, base_price ), color, plastic, size, definition, quantity').order('added_at', { ascending: true }) as { data: productInCart[], error: any }
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  const selected_shipment = matchShipments(user?.user_metadata.shipment_preference)
 
   let items_quantity: number = 0;
   let total_price: number = 0
@@ -42,7 +47,7 @@ export default async function CartPage() {
       <MaxWidthWrapper>
         <div className="flex flex-col gap-4 pt-4 lg:flex-row pb-10">
           {/* Section with products */}
-          <div className="rounded-md flex-1 h-[900px] py-2 md:px-8 md:py-4 bg-white">
+          <div className="rounded-md flex-1 h-[900px] py-2 md:py-4 bg-white">
             <section>
               <h1 className="font-semibold mt-4 mb-4 pb-4 text-xl w-full border-b flex items-center leading-none">
                 <ShoppingCart className="inline-block size-6 mr-2" />
@@ -71,7 +76,16 @@ export default async function CartPage() {
                   <Truck className="inline-block size-6 mr-2" />
                   Envio
                 </h2>
-
+                <label className="block"> Localidad:</label>
+                <div className="flex gap-2 sm:gap-4 flex-wrap sm:flex-nowrap">
+                  {
+                    shipments.map((location, index) => (
+                      <form key={location.title + "key" + index} action={selectShipment} className="w-full relative">
+                        <ShipmentItem shipment={location} active={location.id === selected_shipment?.id} />
+                      </form >
+                    ))
+                  }
+                </div >
               </section>
             }
           </div>
@@ -80,7 +94,9 @@ export default async function CartPage() {
           <PurchaseResumee
             products_total={total_price}
             items_quantity={items_quantity}
-            shipment_cost={6000}
+            shipment_cost={selected_shipment?.price}
+            user_email={user?.email}
+            disabled={selected_shipment ? false : true}
           />
         </div>
       </MaxWidthWrapper >

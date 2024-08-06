@@ -6,16 +6,20 @@ import { routes } from "@/lib/routes";
 import { createClient } from "@/utils/supabase/server";
 import { signout } from "@/app/(shop)/auth/actions";
 import { Icons } from "@/lib/Icons";
+import { SubmitButton } from "./auth/submit-button";
+import { HamburgerMenuIcon } from "@radix-ui/react-icons";
+import HamburgerMenu from "./HamburgerMenu";
 
 
 
 const NavBar = async () => {
 
+
   const supabase = createClient()
 
-  const { data, error } = await supabase.auth.getUser();
+  const { data: { user }, error } = await supabase.auth.getUser();
 
-  const isAdmin = data.user?.email === process.env.ADMIN_EMAIL;
+  const isAdmin = user?.email === process.env.ADMIN_EMAIL;
 
   //@ts-ignore
   const { data: productsInCart } = await supabase.from("cart").select('id, products ( title, slug, images, base_price ), color, plastic, size, definition, quantity').order('added_at', { ascending: true }) as { data: productInCart[], error: any }
@@ -32,17 +36,15 @@ const NavBar = async () => {
           <Link href={routes.home} className="flex hover:scale-105 transition-transform items-center z-40 font-semibold">
             <Icons.logo className="h-12 w-32 mr-2" />
           </Link>
-          <div className="h-full flex items-center space-x-2 sm:space-x-2">
-            {data.user ?
+          <div className="hidden h-full sm:flex items-center space-x-2 sm:space-x-2">
+            {user ?
               (
                 <>
                   {isAdmin && (<Link href={routes.admin.dashboard} className={buttonVariants({ size: 'sm', variant: 'ghost' })}>
                     Dashboard ✨
                   </Link>)}
                   <form action={signout}>
-                    <button type="submit" className={'text-gray-500/90 hover:underline underline-offset-2 text-xs leading-none'}>
-                      Cerrar Sesion
-                    </button>
+                    <SubmitButton text="Cerrar Sesion" variant="ghost" className={'text-gray-500/90 hover:underline underline-offset-2 text-xs leading-none'} size="sm" />
                   </form>
                   <ShoppingCartButton items_quantity={items_quantity} />
                   <Link href={routes.tienda.home} className={buttonVariants({ size: 'sm', className: 'items-center rounded-none gap-1 stroke-1 bg-sky-600' })}>
@@ -60,6 +62,20 @@ const NavBar = async () => {
                 </>
               )
             }
+          </div>
+          <div className="flex h-full sm:hidden items-center justify-center space-x-2 sm:space-x-2">
+            {user && <ShoppingCartButton items_quantity={items_quantity} />}
+            <HamburgerMenu>
+              <li className="mt-4">
+                {user ?
+                  <form action={signout}>
+                    <SubmitButton text="Cerrar Sesion" variant="ghost" className={'text-gray-500/90 hover:underline underline-offset-2 w-full h-12 text-xs leading-none'} size="sm" />
+                  </form>
+                  :
+                  <Link href={routes.auth.login} className={buttonVariants({ size: 'lg', variant: 'outline', className: 'rounded-none w-full h-[50px] self-end ' })}>Ingresar</Link>
+                }
+              </li>
+            </HamburgerMenu>
           </div>
         </div>
       </MaxWidthWrapper>

@@ -32,11 +32,11 @@ export default function CartItem({ product }: { product: productInCart }) {
       }
       <input type="text" className="sr-only hidden" name="order_id" defaultValue={product?.id} />
       <div>
-        <img src={product?.products.images[0]} alt="" className="size-36" />
+        <img src={product?.products.images[0]} alt="" className="size-36 object-cover" />
       </div>
       <div className="ml-4 flex flex-col flex-1">
         <div className="flex flex-col md:flex-row justify-between">
-          <Link href={routes.tienda.productos + '/' + product.products.slug} className="capitalize font-semibold hover:underline hover:scale-105 transition-transform text-lg md:text-xl">
+          <Link href={routes.tienda.productos + '/' + product.products.slug} className="capitalize font-semibold hover:underline hover:scale-[1.01] transition-transform text-lg md:text-xl">
             <h4>{product?.products.title}</h4>
           </Link>
           <p className=" text-gray-400 font-light">{ARS.format(unity_price)}</p>

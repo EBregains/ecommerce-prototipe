@@ -42,6 +42,18 @@ export const COLORS: Array<Color> = [
     colorCode: "bg-green-600 ",
     price: 1
   },
+  {
+    id: '7',
+    name: "Rosa",
+    colorCode: "bg-pink-600 ",
+    price: 1
+  },
+  {
+    id: '8',
+    name: "Celeste",
+    colorCode: "bg-sky-600 ",
+    price: 1
+  },
 ]
 
 export const matchColors = (colors: Array<string>) => {

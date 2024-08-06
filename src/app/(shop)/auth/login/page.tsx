@@ -6,6 +6,7 @@ import { login } from '@/app/(shop)/auth/actions'
 import MaxWidthWrapper from '@/components/MaxWidthWrapper'
 import { buttonVariants } from '@/components/ui/button'
 import { useSearchParams } from 'next/navigation'
+import { SubmitButton } from '@/components/auth/submit-button'
 
 export default function LoginPage() {
 
@@ -27,10 +28,7 @@ export default function LoginPage() {
               <input className='border-b h-8 pl-2 text-base' id="password" name="password" type="password" required />
             </div>
             <input type="text" name="from" className='hidden sr-only' value={comingFrom ?? ""} />
-            <button type='submit' className={buttonVariants({
-              size: "lg",
-              className: 'mt-2 bg-sky-600',
-            })}>Ingresar</button>
+            <SubmitButton text="Iniciar Sesion" className='mt-2 bg-sky-600' />
             <div className='flex flex-1 flex-col items-center'>
               <p className='text-xs opacity-80'>Todavia no tienes una cuenta?</p>
               <Link href={routes.auth.signup} className={buttonVariants({

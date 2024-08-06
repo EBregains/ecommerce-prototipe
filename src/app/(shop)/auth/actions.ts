@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 import z from 'zod'
+import { error } from 'console'
 
 const LogInSchema = z.object({
   email: z.string().email(),
@@ -36,7 +37,9 @@ export async function login(formData: FormData) {
 
   const comingFrom = formData.get("from")
   revalidatePath('/', 'layout')
-  redirect('/' + comingFrom)
+  if (comingFrom)
+    redirect('/' + comingFrom)
+  else redirect('/tienda')
 }
 
 const SignUpSchema = z.object({
@@ -93,7 +96,7 @@ export async function signup(formData: FormData) {
     city,
     address,
   } = validatedFields.data
-  const { data, error } = await supabase.auth.signUp({
+  const result = await supabase.auth.signUp({
     email: email,
     password: password,
     options: {
@@ -112,7 +115,9 @@ export async function signup(formData: FormData) {
     }
   })
 
-  if (error) {
+  console.log(result);
+
+  if (result.error) {
     redirect('/error')
   }
 

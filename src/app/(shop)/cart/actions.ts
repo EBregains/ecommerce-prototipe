@@ -62,3 +62,16 @@ export async function AddOne(formData: FormData) {
 
   revalidatePath('/cart')
 }
+
+export async function selectShipment(formData: FormData) {
+
+  const shipment_id = Number(formData.get('shipment-id'))
+
+  const supabase = createClient()
+
+  const { data, error } = await supabase.auth.updateUser({
+    data: { shipment_preference: shipment_id }
+  })
+
+  revalidatePath('/cart')
+}

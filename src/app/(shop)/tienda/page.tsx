@@ -45,7 +45,19 @@ const Tienda = async () => {
             <Tags className="inline-block size-10 mr-4 stroke-gray-200" />
             Lo Mas Vendido
           </h2>
-          <ProductsCarrousel products={products} itemsPerPage={5}></ProductsCarrousel>
+          {/* THIS IS ABSOLUTELY HORRIBLE BUT FASCINATING, HAVE TO SOLVE IT WITH SOME REACT AND BETTER IMPLEMENTATION */}
+          <div className="hidden xl:block">
+            <ProductsCarrousel products={products} itemsPerPage={5}></ProductsCarrousel>
+          </div>
+          <div className="hidden md:block xl:hidden">
+            <ProductsCarrousel products={products} itemsPerPage={3}></ProductsCarrousel>
+          </div>
+          <div className="hidden sm:block md:hidden">
+            <ProductsCarrousel products={products} itemsPerPage={2}></ProductsCarrousel>
+          </div>
+          <div className="block sm:hidden">
+            <ProductsCarrousel products={products} itemsPerPage={1}></ProductsCarrousel>
+          </div>
           <div className="flex justify-end mt-6">
             <Link className={buttonVariants({
               size: "lg",

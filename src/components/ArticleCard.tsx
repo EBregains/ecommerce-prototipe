@@ -19,8 +19,8 @@ const ArticleCard = ({
 }) => {
 
   return (
-    <a href={routes.tienda.productos + '/' + slug} key={reactKey} className={cn("h-72 w-52 flex flex-col overflow-hidden bg-white shadow-lg hover:scale-105 transition-transform cursor-pointer", className)} >
-      <div className="h-[75%] w-full ">
+    <a href={routes.tienda.productos + '/' + slug} key={reactKey} className={cn("h-72 w-52 flex flex-col overflow-hidden bg-white shadow-lg hover:scale-105 transition-transform cursor-pointer animate-fade-in animate-fade-out", className)} >
+      <div className="h-[70%] w-full flex items-center justify-center ">
         {imgSrc
           ? < img className="inline-block object-cover overflow-hidden w-full" src={imgSrc} alt="" />
           : < img className="inline-block object-cover overflow-hidden w-full opacity-20" src="https://via.assets.so/img.jpg?w=208&h=180&tc=gray&bg=#cecece" alt="" />

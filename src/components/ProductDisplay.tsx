@@ -59,7 +59,7 @@ export const ProductDisplay = ({ product, user_id }: { product: any, user_id: st
                 name="color"
                 id={color.name}
                 type="radio"
-                value={color.id}
+                defaultValue={color.id}
               />
               <label htmlFor={color.name} className={cn(
                 'flex items-center justify-start p-1 size-full border rounded-full',
@@ -91,7 +91,7 @@ export const ProductDisplay = ({ product, user_id }: { product: any, user_id: st
                 name="material"
                 id={material.name}
                 type="radio"
-                value={material.id}
+                defaultValue={material.id}
               />
               <label htmlFor={material.name} className={cn(
                 'flex items-center justify-between p-1 size-full border rounded-md px-4 font-medium',
