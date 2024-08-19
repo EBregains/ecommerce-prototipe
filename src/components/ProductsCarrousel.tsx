@@ -5,6 +5,7 @@ import { useState } from "react";
 import ArticleCard from "./ArticleCard";
 import { cn } from "@/utils/utils";
 import { Product } from "@/lib/types";
+import { cva } from "class-variance-authority";
 
 
 const ProductsCarrousel = ({
@@ -21,13 +22,13 @@ const ProductsCarrousel = ({
   const numberOfPages = 15 / itemsPerPage;
 
   return (
-    <div className={cn("w-full h-max my-4 flex gap-x-2 items-center", className)}>
+    <div className="w-full h-max my-4 flex gap-x-2 items-center">
       <div className="h-full w-10 flex items-center justify-center">
         {currentPage > 1 &&
           <button type="button" onClick={() => setCurrentPage((prev) => prev - 1)}><ArrowLeftCircle className="stroke-white sm:size-8 lg:size-10 stroke-1 hover:opacity-80" /></button>
         }
       </div>
-      <div className={`w-fit grid grid-cols-${itemsPerPage} place-items-center gap-x-4 mx-auto h-72`}>
+      <div className="w-fit flex place-items-center gap-x-4 mx-auto h-72">
         {products?.map((product, index) => {
           if (index < itemsPerPage * currentPage && index >= itemsPerPage * (currentPage - 1)) {
             return (

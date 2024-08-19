@@ -50,6 +50,16 @@ export async function getBestSellers() {
     return data
 }
 
+export async function getProducts(limit = 15, offset = 0) {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from('products')
+    .select()
+    .limit(limit)
+  if (data)
+    return data
+}
+
 export async function getPayments() {
   const supabase = createClient()
   const { data, error } = await supabase.from('payments').select()

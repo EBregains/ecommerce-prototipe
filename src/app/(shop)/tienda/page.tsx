@@ -45,9 +45,9 @@ const Tienda = async () => {
             <Tags className="inline-block size-10 mr-4 stroke-gray-200" />
             Lo Mas Vendido
           </h2>
-          {/* THIS IS ABSOLUTELY HORRIBLE BUT FASCINATING, HAVE TO SOLVE IT WITH SOME REACT AND BETTER IMPLEMENTATION */}
+          {/* THIS IS ABSOLUTELY HORRIBLE BUT FASCINATING, HAVE TO SOLVE IT WITH A BETTER IMPLEMENTATION */}
           <div className="hidden xl:block">
-            <ProductsCarrousel products={products} itemsPerPage={5}></ProductsCarrousel>
+            <ProductsCarrousel products={products} itemsPerPage={4}></ProductsCarrousel>
           </div>
           <div className="hidden md:block xl:hidden">
             <ProductsCarrousel products={products} itemsPerPage={3}></ProductsCarrousel>
